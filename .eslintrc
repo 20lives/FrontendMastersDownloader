@@ -32,6 +32,10 @@
       "error",
       "single"
     ],
+    "eslint quote-props": [
+      "error",
+      "consistent-as-needed"
+    ],
     "semi": [
       "error",
       "always"
