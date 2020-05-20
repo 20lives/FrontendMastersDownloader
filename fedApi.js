@@ -56,7 +56,5 @@ function sendRequest(target, body = null) {
     options.headers.authorization = `Bearer ${token}`;
   }
   const url = `${constants.baseUrl}${target}`;
-  console.log(url);
-  console.log(options);
   return fetch(url, options).then(res => res.text()).then(x => JSON.parse(x));
 }
