@@ -32,8 +32,8 @@ let token;
 async function login(username, password) {
   await generateTimestamp();
   const json = await sendRequest('login/', { password, username });
-  console.log(json);
   token = json.token;
+  return json
 }
 
 function courses() {

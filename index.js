@@ -8,8 +8,14 @@ import prompts from './prompts.js';
 (async function run() {
   const { email, password } = await inquirer.prompt(prompts.login);
 
-  await fedApi.login(email, password);
+  const loginRes = await fedApi.login(email, password);
 
+  if (loginRes.code) {
+    console.log(`Login failed: ${loginRes.message}`);
+    return;
+  }
+
+  return ;
   const list = await fedApi.courses();
 
   const { hash } = list[0];
