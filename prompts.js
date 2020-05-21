@@ -20,6 +20,18 @@ const searchCourse = [
   },
 ];
 
+
+const selectCourse = (list) => [
+  {
+    type: 'list',
+    name: 'hash',
+    message: 'Select a course form search results:',
+    choices: list,
+  },
+];
+
 export default {
-    login,
+  login,
+  searchCourse,
+  selectCourse,
 };

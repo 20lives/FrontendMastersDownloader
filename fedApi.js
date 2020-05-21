@@ -6,7 +6,7 @@ import constants from './constants.js';
 export default {
   login,
   course,
-  courses,
+  search,
 };
 
 async function generateTimestamp() {
@@ -36,20 +36,29 @@ async function login(username, password) {
   return json
 }
 
-function courses() {
-  return sendRequest('courses/?limit=9999');
+async function search(query) {
+  const lower = query.toLowerCase();
+  const courses = await sendRequest('courses/?limit=9999');
+  return courses.filter(course => course.title.toLowerCase().includes(lower));
 }
 
 async function course(hash) {
-  return sendRequest(`courses/${hash}`);
+  const json = await sendRequest(`courses/${hash}`)
+  const list = json.lessonGroups.reduce((acc, cur) => [...acc, ...cur.lessons], []);
+  return list.map(course => {
+    const { title, pos, streamingURL, transcriptURL } = course;
+    return { title, pos, streamingURL, transcriptURL };
+  });
 }
 
 function sendRequest(target, body = null) {
   const options = {
-    method: body ? 'post' : 'get' ,
+    method: body ? 'POST' : 'GET' ,
     headers: baseHeaders,
-    body: JSON.stringify(body),
   };
+  if (body) {
+    options.body = JSON.stringify(body);
+  }
   if (!token) {
     options.headers['x-request-signature'] = `timestamp=${timestamp}&hash=${hash}`;
   } else {
