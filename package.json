@@ -1,9 +1,12 @@
 {
-  "name": "frontendmastersdownloader",
-  "version": "0.0.1",
+  "name": "frontendmasters-downloader",
+  "version": "0.0.3",
   "description": "",
   "type": "module",
   "main": "index.js",
+  "bin": {
+    "frontendmastersDownloader": "index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,8 +27,8 @@
     "prettier": "^2.0.5"
   },
   "dependencies": {
-    "crypto-js": "^4.0.0",
     "inquirer": "^7.1.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "progress": "^2.0.3"
   }
 }

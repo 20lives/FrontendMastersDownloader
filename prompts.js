@@ -24,7 +24,7 @@ const searchCourse = [
 const selectCourse = (list) => [
   {
     type: 'list',
-    name: 'hash',
+    name: 'course',
     message: 'Select a course form search results:',
     choices: list,
   },

@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
 import inquirer from 'inquirer';
+import fs from 'fs';
+
 
 import fedApi from './fedApi.js';
 import prompts from './prompts.js';
+import dl from './downloader.js';
 
 (async function run() {
   const { email, password } = await inquirer.prompt(prompts.login);
@@ -30,13 +33,30 @@ import prompts from './prompts.js';
     const { title, instructors, hasCC, durationSeconds, hash } = course;
     return {
       name: `${title} - ${instructors[0].name} (${parseInt(durationSeconds / 3600)} hours, ${parseInt(durationSeconds / 60 % 60)} minutes) ${hasCC ? '[CC]' : ''}`,
-      value: hash,
+      value: course,
     };
   });
 
-  const { hash } = await inquirer.prompt(prompts.selectCourse(list));
+  const { course } = await inquirer.prompt(prompts.selectCourse(list));
 
-  const course = await fedApi.course(hash);
+  const answers = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'download',
+      message: `download ${course.title}? (Y/n)`,
+      default: true,
+    },
+  ]);
 
-  console.log(course);
+  const downloadList = await fedApi.course(course.hash);
+
+  dl.setDir( `./${course.title}/`);
+  dl.setTotal(downloadList.length);
+
+  for (const file of downloadList) {
+    const { streamingURL, transcriptURL, pos, title } = file;
+    dl.download( transcriptURL, pos, title, 'srt');
+    await dl.hlsdl( streamingURL, pos, title, 'm3u8');
+  }
+
 })();
