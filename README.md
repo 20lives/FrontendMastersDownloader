@@ -1,20 +1,21 @@
 # FrontendMasters Video Course Downloader
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/tailwindcss-rtl">
-    <img src="https://img.shields.io/npm/dt/tailwindcss-rtl.svg" alt="Total Downloads">
+  <a href="https://www.npmjs.com/package/frontendmasters-downloader">
+    <img src="https://img.shields.io/npm/dt/frontendmasters-downloader.svg" alt="Total Downloads">
   </a>
-  <img src="https://img.shields.io/npm/v/tailwindcss-rtl.svg" alt="Latest Release">
+  <img src="https://img.shields.io/npm/v/frontendmasters-downloader.svg" alt="Latest Release">
+  <img src="https://i.imgur.com/1lxq31F.gif">
 </p>
-
 
 ## Intro
 
-[FrontendMasters] is a great website for learning frontend and Javascript skills, **FrontendMastersDownloader** let's you keep an offline copy of videos to watch on your favourite device without the need for internet connection.
+[FrontendMasters](https://frontendmasters.com) is a great website for learning frontend and Javascript skills, **FrontendMastersDownloader** let's you keep an offline copy of videos to watch on your favourite device without the need for internet connection.
 
 ## Usage
 
-To use this you should have an active subscription to [FrontendMasters](https://frontendmasters.com) service.
+To use this you should have an active subscription to [FrontendMasters](https://frontendmasters.com) service, if you are a student with school email adress you can get [six months free](https://frontendmasters.com/welcome/github-student-developers/).
+
 
 The simplest way of using this is with `npx`, just run:
 ```
@@ -30,10 +31,6 @@ cd frontendmastersDownloader
 npm run start
 # or yarn start
 ```
-
-## Todos
-
-* Add ID3 tags to downloaded files
 
 ## Disclaimer
 
