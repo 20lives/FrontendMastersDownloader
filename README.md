@@ -12,6 +12,10 @@
 
 [FrontendMasters](https://frontendmasters.com) is a great website for learning frontend and Javascript skills, **FrontendMastersDownloader** let's you keep an offline copy of videos to watch on your favourite device without the need for internet connection.
 
+## Requirements
+
+[youtube-dl](https://rg3.github.io/youtube-dl/) is used to convert HLS playlist to MP4, make sure to install it and have it available in your **PATH** before running.
+
 ## Usage
 
 To use this you should have an active subscription to [FrontendMasters](https://frontendmasters.com) service, if you are a student with school email adress you can get [six months free](https://frontendmasters.com/welcome/github-student-developers/).
