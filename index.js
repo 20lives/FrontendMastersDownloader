@@ -7,6 +7,7 @@ import fs from 'fs';
 import fedApi from './fedApi.js';
 import prompts from './prompts.js';
 import dl from './downloader.js';
+import sanitize from './utils.js';
 
 (async function run() {
   const { email, password } = await inquirer.prompt(prompts.login);
@@ -50,7 +51,7 @@ import dl from './downloader.js';
 
   const downloadList = await fedApi.course(course.hash);
 
-  dl.setDir( `./${course.title}/`);
+  dl.setDir( `./${sanitize(course.title)}/`);
   dl.setTotal(downloadList.length);
 
   for (const file of downloadList) {

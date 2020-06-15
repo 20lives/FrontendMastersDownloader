@@ -5,6 +5,8 @@ import readline from 'readline';
 import util from 'util';
 import { spawn } from 'child_process';
 
+import { sanitize } from './utils.js';
+
 let total;
 let dir;
 
@@ -17,7 +19,7 @@ function setTotal(_total) {
 }
 
 function download(url, id, title, ext) {
-  const filename = `${id + 1}. ${title}.${ext}`.replace(/[^\w\s-\._]/gi, '-')
+  const filename = sanitize(`${id + 1}. ${title}.${ext}`);
 
   const destPath = `${dir}/${filename}`;
 
