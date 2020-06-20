@@ -5,7 +5,7 @@ import readline from 'readline';
 import util from 'util';
 import { spawn } from 'child_process';
 
-import { sanitize } from './utils.js';
+import sanitize from './utils.js';
 
 let total;
 let dir;
