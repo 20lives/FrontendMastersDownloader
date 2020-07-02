@@ -30,8 +30,29 @@ const selectCourse = (list) => [
   },
 ];
 
+const selectVideoQuality = (list) => [
+  {
+    type: 'list',
+    name: 'video',
+    message: 'Select Video quality:',
+    choices: list,
+  },
+];
+
+const selectAudioQuality = (list) => [
+  {
+    type: 'list',
+    name: 'audio',
+    message: 'Select Audio quality:',
+    choices: list,
+  },
+];
+
+
 export default {
   login,
   searchCourse,
   selectCourse,
+  selectVideoQuality,
+  selectAudioQuality,
 };

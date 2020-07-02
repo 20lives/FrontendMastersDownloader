@@ -1,5 +1,7 @@
 import fetch from 'node-fetch';
 
+import fs from 'fs';
+
 import fedHasher from './fedHasher.js';
 import constants from './constants.js';
 
@@ -7,6 +9,7 @@ export default {
   login,
   course,
   search,
+  isAuth,
 };
 
 async function generateTimestamp() {
@@ -31,9 +34,15 @@ let token;
 
 async function login(username, password) {
   await generateTimestamp();
-  const json = await sendRequest('login/', { password, username });
-  token = json.token;
-  return json
+  if (getToken() != "") {
+    token = getToken();
+    return {}
+  } else {
+    const json = await sendRequest('login/', { password, username });
+    token = json.token;
+    saveToken(token);
+    return json
+  }
 }
 
 async function search(query) {
@@ -66,4 +75,28 @@ function sendRequest(target, body = null) {
   }
   const url = `${constants.baseUrl}${target}`;
   return fetch(url, options).then(res => res.text()).then(x => JSON.parse(x));
+}
+
+function saveToken(token) {
+  let credentialfile = "credential.json";
+  fs.readFile(credentialfile, 'utf8', function readFileCallback(err, data){
+    if (err){
+        console.log(err);
+    } else {
+    let obj = JSON.parse(data);
+    obj.token = token;
+    let json = JSON.stringify(obj);
+    fs.writeFileSync(credentialfile, json);
+}});
+}
+
+function getToken() {
+  let credentialfile = "credential.json";
+  let obj = fs.readFileSync(credentialfile, 'utf8');
+  obj = JSON.parse(obj);
+  return obj.token;
+}
+
+function isAuth() {
+  return getToken() != "";
 }
