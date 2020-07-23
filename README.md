@@ -14,6 +14,8 @@
 
 ## Requirements
 
+This package is using the experimental es modules feature only available on recent versions of node (**v13.2+**).
+
 [youtube-dl](https://rg3.github.io/youtube-dl/) is used to convert HLS playlist to MP4, make sure to install it and have it available in your **PATH** before running.
 
 ## Usage
