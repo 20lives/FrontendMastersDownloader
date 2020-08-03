@@ -3,20 +3,21 @@
 import inquirer from 'inquirer';
 import fs from 'fs';
 
-
 import fedApi from './fedApi.js';
 import prompts from './prompts.js';
 import dl from './downloader.js';
 import { sanitize } from './utils.js';
 
 (async function run() {
-  const { email, password } = await inquirer.prompt(prompts.login);
+  if (!(await fedApi.tryExistingTokens())) {
 
-  const loginRes = await fedApi.login(email, password);
+    const { email, password } = await inquirer.prompt(prompts.login);
+    const loginRes = await fedApi.login(email, password);
 
-  if (loginRes.code) {
-    console.log(`Login failed: ${loginRes.message}`);
-    return;
+    if (loginRes.code) {
+      console.log(`Login failed: ${loginRes.message}`);
+      return;
+    }
   }
 
   let searchCourseRes = [];
