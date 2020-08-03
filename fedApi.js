@@ -19,13 +19,31 @@ async function generateTimestamp() {
   hash = await fedHasher(timestamp);
 }
 
+function rndHex(len) {
+  const hex = '0123456789abcdef';
+  let output = '';
+  for (let i = 0; i < len; ++i) {
+    output += hex.charAt(Math.floor(Math.random() * hex.length));
+  }
+  return output;
+}
+
+function generateClientDeviceID() {
+  return `${rndHex(8)}-${rndHex(4)}-${rndHex(4)}-${rndHex(4)}-${rndHex(12)}`;
+}
+
+let timestamp;
+let hash;
+let token;
+
+const cliendDeviceID = generateClientDeviceID();
 
 const baseHeaders = {
   'Host': 'api.frontendmasters.com',
   'content-type': 'application/json; charset=utf-8',
   'accept': 'application/json',
   'x-request-signature' : '',
-  'x-client-device': '17ab480f-9f5a-4079-8b78-7fc9a76834b0',
+  'x-client-device': cliendDeviceID,
   'x-client-platform': 'android',
 };
 
