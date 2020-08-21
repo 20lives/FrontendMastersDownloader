@@ -1,9 +1,8 @@
 import fetch from 'node-fetch';
 import progress from 'progress';
 import fs from 'fs';
-import readline from 'readline';
 import util from 'util';
-import { spawn } from 'child_process';
+import ffmpeg from 'fluent-ffmpeg';
 
 import { sanitize } from './utils.js';
 
@@ -18,9 +17,8 @@ function setTotal(_total) {
   total = _total;
 }
 
-function download(url, id, title, ext) {
+async function download(url, id, title, ext) {
   const filename = sanitize(`${id + 1}. ${title}.${ext}`);
-
   const destPath = `${dir}/${filename}`;
 
   if (!fs.existsSync(dir)) {
@@ -32,45 +30,31 @@ function download(url, id, title, ext) {
     return;
   }
 
-  return fetch(url).then((data) => {
-    const bar = new progress( `[:bar] (${id + 1}/${total}): ${title}`, {
-      complete: '=',
-      incomplete: ' ',
-      width: 30,
-      total: Number(data.headers.get('content-length')),
-    });
+  const progressLine = `[:bar] (${id + 1}/${total}): ${title} (${ext})`;
 
-    data.body.pipe(fs.createWriteStream(destPath));
-    data.body.on('data', (chunk) => bar.tick(chunk.length));
-    return new Promise((resolve) => data.body.on('end', resolve));
-  });
-}
+  if (ext == 'srt') {
+    const bar = new progress( progressLine, { width: 30, total: 100 });
+    const data = await fetch(url);
+    const { body } = data;
 
-async function hlsdl(url, id, title, ext) {
+    bar.total  = Number(data.headers.get('content-length'));
 
-  const filename = `${id + 1}. ${title}.mp4`.replace(/[^\w\s-\._]/gi, '-')
+    body.pipe(fs.createWriteStream(destPath));
+    body.on('data', (chunk) => bar.tick(chunk.length));
 
-  const destPath = `${dir}/${filename}`;
+    return new Promise(resolve => body.on('end', resolve));
+  } else if (ext == 'mp4') {
+    const bar = new progress( progressLine, { width: 30, total: 100 });
 
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
+    const update = prog => bar.tick(prog.percent - bar.curr);
+    const run = ffmpeg(url).on('progress', update).save(destPath);
+
+    return new Promise(resolve => run.on('end', resolve));
   }
-
-  if (fs.existsSync(destPath)) {
-    console.log('File already exists, skips');
-    return;
-  }
-
-  const run = await spawn('youtube-dl',  [`-o${destPath}`, url]);
-
-  run.stdout.on('data', data  => console.log(data.toString()));
-  run.stderr.on('data', data  => console.log(data.toString()));
-  return new Promise(resolve => run.on('exit', resolve));
 }
 
 export default {
   download,
   setDir,
   setTotal,
-  hlsdl,
 }

@@ -57,8 +57,8 @@ import { sanitize } from './utils.js';
 
   for (const file of downloadList) {
     const { streamingURL, transcriptURL, pos, title } = file;
-    dl.download( transcriptURL, pos, title, 'srt');
-    await dl.hlsdl( streamingURL, pos, title, 'm3u8');
+    await dl.download( transcriptURL, pos, title, 'srt');
+    await dl.download( streamingURL, pos, title, 'mp4');
   }
 
 })();
