@@ -1,6 +1,6 @@
 {
   "name": "frontendmasters-downloader",
-  "version": "0.2",
+  "version": "0.3.0",
   "description": "",
   "type": "module",
   "main": "src/index.js",
