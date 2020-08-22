@@ -47,7 +47,9 @@ import { sanitize } from './utils.js';
 
   for (const file of downloadList) {
     const { streamingURL, transcriptURL, pos, title } = file;
-    await dl.download( transcriptURL, pos, title, 'srt');
+    if (transcriptURL) {
+      await dl.download( transcriptURL, pos, title, 'srt');
+    }
     await dl.download( streamingURL, pos, title, 'mp4');
   }
 
