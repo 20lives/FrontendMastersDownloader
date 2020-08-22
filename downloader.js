@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
 import progress from 'progress';
 import fs from 'fs';
-import util from 'util';
 import ffmpeg from 'fluent-ffmpeg';
 
 import { sanitize } from './utils.js';
@@ -57,4 +56,4 @@ export default {
   download,
   setDir,
   setTotal,
-}
+};

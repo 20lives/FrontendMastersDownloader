@@ -56,7 +56,7 @@ async function login(username, password) {
     saveTokens();
   }
 
-  return json
+  return json;
 }
 
 function saveTokens() {
@@ -79,7 +79,7 @@ async function search(query) {
 }
 
 async function course(hash) {
-  const json = await sendRequest(`courses/${hash}`)
+  const json = await sendRequest(`courses/${hash}`);
   const list = json.lessonGroups.reduce((acc, cur) => [...acc, ...cur.lessons], []);
   return list.map(course => {
     const { title, pos, streamingURL, transcriptURL } = course;
@@ -112,7 +112,7 @@ async function tryExistingTokens() {
   const tokens = JSON.parse(fs.readFileSync(tokensPath));
   const tokenWorks = await testTokens(tokens);
   if (!tokenWorks) {
-    console.log('Existing login expired/not working.')
+    console.log('Existing login expired/not working.');
     return false;
   }
   return true;

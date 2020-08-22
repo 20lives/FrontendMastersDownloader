@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import inquirer from 'inquirer';
-import fs from 'fs';
 
 import fedApi from './fedApi.js';
 import prompts from './prompts.js';
@@ -32,7 +31,7 @@ import { sanitize } from './utils.js';
   }
 
   const list = searchCourseRes.map((course) => {
-    const { title, instructors, hasCC, durationSeconds, hash } = course;
+    const { title, instructors, hasCC, durationSeconds } = course;
     return {
       name: `${title} - ${instructors[0].name} (${parseInt(durationSeconds / 3600)} hours, ${parseInt(durationSeconds / 60 % 60)} minutes) ${hasCC ? '[CC]' : ''}`,
       value: course,
