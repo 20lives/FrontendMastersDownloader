@@ -1,14 +1,13 @@
 {
   "env": {
-    "es6": true,
-    "node": true
+    "browser": true,
+    "commonjs": true,
+    "es6": true
   },
   "extends": [
     "eslint:recommended",
-    "prettier"
   ],
   "plugins": [
-    "prettier"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -16,14 +15,9 @@
   },
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module"
+    "sourceType": "module",
   },
   "rules": {
-    "prettier/prettier": ["error"],
-    "indent": [
-      "error",
-      2 
-    ],
     "linebreak-style": [
       "error",
       "unix"
@@ -32,13 +26,9 @@
       "error",
       "single"
     ],
-    "eslint quote-props": [
-      "error",
-      "consistent-as-needed"
-    ],
     "semi": [
       "error",
       "always"
     ]
-  }
+  },
 }
