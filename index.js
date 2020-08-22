@@ -40,15 +40,6 @@ import { sanitize } from './utils.js';
 
   const { course } = await inquirer.prompt(prompts.selectCourse(list));
 
-  const answers = await inquirer.prompt([
-    {
-      type: 'confirm',
-      name: 'download',
-      message: `download ${course.title}? (Y/n)`,
-      default: true,
-    },
-  ]);
-
   const downloadList = await fedApi.course(course.hash);
 
   dl.setDir( `./${sanitize(course.title)}/`);
