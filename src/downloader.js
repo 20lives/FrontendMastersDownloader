@@ -1,9 +1,12 @@
 import fetch from 'node-fetch';
 import progress from 'progress';
 import fs from 'fs';
+import ffmpegInstaller from '@ffmpeg-installer/ffmpeg';
 import ffmpeg from 'fluent-ffmpeg';
 
 import { sanitize } from './utils.js';
+
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 let total;
 let dir;
