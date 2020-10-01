@@ -30,8 +30,18 @@ const selectCourse = (list) => [
   },
 ];
 
+const selectQuality = (list) => [
+  {
+    type: 'list',
+    name: 'quality',
+    message: 'Select download quality:',
+    choices: list,
+  },
+];
+
 export default {
   login,
   searchCourse,
   selectCourse,
+  selectQuality,
 };

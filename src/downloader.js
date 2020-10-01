@@ -16,7 +16,7 @@ function setTotal(_total) {
   total = _total;
 }
 
-async function download(url, id, title, ext) {
+async function download(url, id, title, ext, programId) {
   const filename = sanitize(`${id + 1}. ${title}.${ext}`);
   const destPath = `${dir}/${filename}`;
 
@@ -46,7 +46,7 @@ async function download(url, id, title, ext) {
     const bar = new progress( progressLine, { width: 30, total: 100 });
 
     const update = prog => bar.tick(prog.percent - bar.curr);
-    const run = ffmpeg(url).on('progress', update).save(destPath);
+    const run = ffmpeg(url).outputOptions([`-map p:${programId}`, '-c copy']).on('progress', update).save(destPath);
 
     return new Promise(resolve => run.on('end', resolve));
   }

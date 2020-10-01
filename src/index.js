@@ -6,6 +6,7 @@ import fedApi from './fedApi.js';
 import prompts from './prompts.js';
 import dl from './downloader.js';
 import { sanitize } from './utils.js';
+import { extractPrograms } from './programsExtractor.js';
 
 (async function run() {
   if (!(await fedApi.tryExistingTokens())) {
@@ -42,15 +43,19 @@ import { sanitize } from './utils.js';
 
   const downloadList = await fedApi.course(course.hash);
 
+  const programs = await extractPrograms(downloadList);
+
+  const { quality } = await inquirer.prompt(prompts.selectQuality(programs));
+
   dl.setDir( `./${sanitize(course.title)}/`);
   dl.setTotal(downloadList.length);
 
   for (const file of downloadList) {
     const { streamingURL, transcriptURL, pos, title } = file;
     if (transcriptURL) {
-      await dl.download( transcriptURL, pos, title, 'srt');
+      await dl.download(transcriptURL, pos, title, 'srt');
     }
-    await dl.download( streamingURL, pos, title, 'mp4');
+    await dl.download(streamingURL, pos, title, 'mp4', quality);
   }
 
 })();
