@@ -15,12 +15,11 @@
 ## Requirements
 
 * This package is using the experimental es modules feature only available on recent versions of node (**v13.2+**).
-* **FFmpeg** is used to download and encode the video files.
+* **FFmpeg** and **FFProbe** are required and used to download the video files, use your OS package manager to install it or download it from here: [Linux](https://johnvansickle.com/ffmpeg/)/[Mac](https://evermeet.cx/ffmpeg/)/[Windows](https://www.gyan.dev/ffmpeg/builds/) (The files should be accesible via PATH or on the current running directory)
 
 ## Usage
 
 To use this you should have an active subscription to [FrontendMasters](https://frontendmasters.com) service, if you are a student with school email adress you can get [six months free](https://frontendmasters.com/welcome/github-student-developers/).
-
 
 The simplest way of using this is with `npx`, just run:
 ```
