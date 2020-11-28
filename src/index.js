@@ -52,6 +52,9 @@ import { extractPrograms } from './programsExtractor.js';
 
   for (const file of downloadList) {
     const { streamingURL, transcriptURL, pos, title } = file;
+    if (streamingURL == '') {
+      continue;
+    }
     if (transcriptURL) {
       await dl.download(transcriptURL, pos, title, 'srt');
     }
