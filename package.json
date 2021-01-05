@@ -25,6 +25,7 @@
     "eslint": "^6.8.0"
   },
   "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.0.20",
     "fluent-ffmpeg": "^2.1.2",
     "inquirer": "^7.1.0",
     "node-fetch": "^2.6.0",
