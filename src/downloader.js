@@ -29,7 +29,7 @@ async function download(url, id, title, ext, programId) {
     return;
   }
 
-  const progressLine = `[:bar] (${id + 1}/${total}): ${title} (${ext})`;
+  const progressLine = `[:ts] [:bar] (${id + 1}/${total}): ${title} (${ext})`;
 
   if (ext == 'srt') {
     const bar = new progress( progressLine, { width: 30, total: 100 });
@@ -39,13 +39,17 @@ async function download(url, id, title, ext, programId) {
     bar.total  = Number(data.headers.get('content-length'));
 
     body.pipe(fs.createWriteStream(destPath));
-    body.on('data', (chunk) => bar.tick(chunk.length));
+    body.on('data', (chunk) => bar.tick(chunk.length, {
+      ts: (new Date()).toISOString(),
+    }));
 
     return new Promise(resolve => body.on('end', resolve));
   } else if (ext == 'mp4') {
     const bar = new progress( progressLine, { width: 30, total: 100 });
 
-    const update = prog => bar.tick(prog.percent - bar.curr);
+    const update = prog => bar.tick(prog.percent - bar.curr, {
+      ts: (new Date()).toISOString(),
+    });
     const run = ffmpeg(url).outputOptions([`-map p:${programId}`]).on('progress', update).save(destPath);
 
     return new Promise(resolve => run.on('end', resolve));
