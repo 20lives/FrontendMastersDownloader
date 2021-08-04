@@ -32,6 +32,8 @@ if you want to run it without `npx` just follow these command:
 ```
 git clone https://github.com/20lives/frontendmastersDownloader.git
 cd frontendmastersDownloader
+npm install 
+# or yarn
 npm run start
 # or yarn start
 ```
